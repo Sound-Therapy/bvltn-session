@@ -74,8 +74,11 @@ function startSession() {
 
 async function testBackend() {
 
-    const sessionName = document.getElementById("sessionName").value.trim();
-    const lyrics = document.getElementById("lyrics").value.trim();
+    const sessionName =
+        document.getElementById("sessionName").value.trim();
+
+    const lyrics =
+        document.getElementById("lyrics").value.trim();
 
     const instrumental =
         document.getElementById("instrumentalFile").files[0];
@@ -84,16 +87,22 @@ async function testBackend() {
         document.getElementById("guideFile").files[0];
 
     if (!sessionName) {
-
         alert("Please enter Session Name.");
-
         return;
-
     }
 
-    // Database 저장
+    if (!instrumental) {
+        alert("Please select an Instrumental file.");
+        return;
+    }
 
-    const { error } = await db
+    if (!guide) {
+        alert("Please select an Instrumental + Guide file.");
+        return;
+    }
+
+    // 1. Save session to database
+    const { error: dbError } = await db
         .from("sessions")
         .insert([
             {
@@ -102,18 +111,42 @@ async function testBackend() {
             }
         ]);
 
-    if (error) {
-
-        alert(error.message);
-
+    if (dbError) {
+        alert(dbError.message);
         return;
-
     }
 
-    alert("Session saved.\n\nNext step: Upload will be added.");
+    // 2. Upload Instrumental
+    const { error: instError } = await db.storage
+        .from("instrumentals")
+        .upload(
+            sessionName + ".mp3",
+            instrumental,
+            { upsert: true }
+        );
+
+    if (instError) {
+        alert("Instrumental Upload Failed\n\n" + instError.message);
+        return;
+    }
+
+    // 3. Upload Instrumental + Guide
+    const { error: guideError } = await db.storage
+        .from("guides")
+        .upload(
+            sessionName + ".mp3",
+            guide,
+            { upsert: true }
+        );
+
+    if (guideError) {
+        alert("Guide Upload Failed\n\n" + guideError.message);
+        return;
+    }
+
+    alert("Session Created Successfully!");
 
 }
-
 
 // ---------- Events ----------
 
