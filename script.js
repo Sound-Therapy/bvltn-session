@@ -199,3 +199,40 @@ async function testBackend() {
     );
 
 }
+// ---------- Events ----------
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById("startBtn")
+        ?.addEventListener("click", startSession);
+
+    document.getElementById("producerLink")
+        ?.addEventListener("click", showLogin);
+
+    document.getElementById("loginBtn")
+        ?.addEventListener("click", login);
+
+    document.getElementById("backBtn")
+        ?.addEventListener("click", goHome);
+
+    document.getElementById("instrumentalFile")
+        ?.addEventListener("change", function () {
+
+            const file = this.files[0];
+
+            document.getElementById("instrumentalName").innerText =
+                file ? file.name : "No file selected";
+
+        });
+
+    document.getElementById("guideFile")
+        ?.addEventListener("change", function () {
+
+            const file = this.files[0];
+
+            document.getElementById("guideName").innerText =
+                file ? file.name : "No file selected";
+
+        });
+
+});
