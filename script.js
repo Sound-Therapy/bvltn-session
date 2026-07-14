@@ -293,15 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("readyBtn")
     ?.addEventListener("click", () => {
 
-        document
-            .getElementById("instructionPanel")
-            .classList
-            .add("hidden");
-
-        document
-            .getElementById("sessionPanel")
-            .classList
-            .remove("hidden");
+       id="sessionCode"
 
     });
     document.getElementById("producerLink")
