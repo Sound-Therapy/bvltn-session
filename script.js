@@ -101,23 +101,10 @@ async function testBackend() {
         return;
     }
 
-    // 1. Save session to database
-    const { error: dbError } = await db
-        .from("sessions")
-        .insert([
-            {
-                session_name: sessionName,
-                lyrics: lyrics
-            }
-        ]);
-
-    if (dbError) {
-        alert(dbError.message);
-        return;
-    }
+    
 
     // 2. Upload Instrumental
-    const { error: instError } = await db.storage
+    const { data: instData, error: instError } = await db.storage
         .from("instrumentals")
       .upload(
     `${sessionName}/${instrumental.name}`,
@@ -130,7 +117,7 @@ async function testBackend() {
     }
 
     // 3. Upload Instrumental + Guide
-    const { error: guideError } = await db.storage
+    const { data: guideData, error: guideError } = await db.storage
         .from("guides")
       .upload(
     `${sessionName}/${guide.name}`,
@@ -141,7 +128,22 @@ async function testBackend() {
         alert("Guide Upload Failed\n\n" + guideError.message);
         return;
     }
+// 4. Save session to database
+const { error: dbError } = await db
+    .from("sessions")
+    .insert([
+        {
+            session_name: sessionName,
+            lyrics: lyrics,
+            instrumental_path: instData.path,
+            guide_path: guideData.path
+        }
+    ]);
 
+if (dbError) {
+    alert(dbError.message);
+    return;
+}
     alert("Session Created Successfully!");
 
 }
