@@ -1,14 +1,22 @@
+// ===============================
+// BVLTNE v0.3
+// ===============================
+
+// Supabase
 const SUPABASE_URL = "https://qypotzqpbjgnyvraiajk.supabase.co";
-
 const SUPABASE_KEY =
-"sb_publishable_WJeDy9HerJD_SXy1sA018w_MBTkgsW6";
+  "sb_publishable_WJeDy9HerJD_SXy1sA018w_MBTkgsW6";
 
-const supabase = window.supabase.createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-console.log("BVLTNE connected to Supabase");
+console.log("BVLTNE Connected");
+console.log(db);
+
+// -------------------------------
+
 function hideAll() {
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("loginPage").classList.add("hidden");
@@ -40,40 +48,9 @@ function startSession() {
   alert("Artist page will be built next.");
 }
 
-function nextProducer() {
-  alert("Producer NEXT clicked.");
-}
-
-async function testBackend() {
-
-  try {
-
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbwIMpWSBMevxoYKcQCPPh59PAP-JVEeeEZd9AOoVwxNhLom2bIsfr2RhrG65OS1yTth/exec",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          session: "Test Session",
-          lyrics: "Hello World"
-        })
-      }
-    );
-
-    const text = await response.text();
-
-    alert(text);
-
-  } catch (err) {
-
-    console.error(err);
-
-    alert("Backend Error");
-
-  }
-
+// 임시
+function testBackend() {
+  alert("Supabase connection is ready.");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -85,8 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loginBtn")?.addEventListener("click", login);
 
   document.getElementById("backBtn")?.addEventListener("click", goHome);
-
-  document.getElementById("nextBtn")?.addEventListener("click", nextProducer);
 
   document.getElementById("instrumentalFile")?.addEventListener("change", function () {
 
