@@ -65,13 +65,24 @@ function login() {
 
 async function startSession() {
 
-    const params = new URLSearchParams(window.location.search);
+    document
+        .getElementById("sessionCode")
+        .focus();
 
-    const sessionToken = params.get("session");
+}
 
-    if (!sessionToken) {
+async function joinSession() {
 
-        alert("No session link.");
+    const token =
+        document
+            .getElementById("sessionCode")
+            .value
+            .trim()
+            .toUpperCase();
+
+    if (!token) {
+
+        alert("Please enter Session Code.");
 
         return;
 
@@ -80,7 +91,7 @@ async function startSession() {
     const { data, error } = await db
         .from("sessions")
         .select("*")
-        .eq("session_token", sessionToken)
+        .eq("session_token", token)
         .single();
 
     if (error) {
@@ -114,7 +125,6 @@ async function startSession() {
         data.lyrics;
 
 }
-
 
 // ---------- Save Session ----------
 
@@ -251,6 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("startBtn")
         ?.addEventListener("click", startSession);
+    document.getElementById("joinBtn")
+    ?.addEventListener("click", joinSession);
 
     document.getElementById("producerLink")
         ?.addEventListener("click", showLogin);
