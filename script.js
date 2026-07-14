@@ -88,11 +88,25 @@ async function joinSession() {
 
     }
 
-    const { data, error } = await db
-        .from("sessions")
-        .select("*")
-        .eq("session_token", token)
-        .single();
+   const { data, error } = await db
+    .from("sessions")
+    .select("*")
+    .ilike("session_token", token);
+
+console.log(data);
+console.log(error);
+
+if (error) {
+    alert(error.message);
+    return;
+}
+
+if (!data || data.length === 0) {
+    alert("Session not found.");
+    return;
+}
+
+const session = data[0];
     console.log("TOKEN =", token);
     console.log("DATA =", data, "ERROR =", error);
 
@@ -119,12 +133,12 @@ async function joinSession() {
     document
         .getElementById("currentSessionName")
         .innerText =
-        data.session_name;
+       session.session_name;
 
     document
         .getElementById("currentLyrics")
         .innerText =
-        data.lyrics;
+        session.lyrics;
 
 }
 
