@@ -1,3 +1,14 @@
+const SUPABASE_URL = "https://qypotzqpbjgnyvraiajk.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_WJeDy9HerJD_SXy1sA018w_MBTkgsW6";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+console.log("BVLTNE connected to Supabase");
 function hideAll() {
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("loginPage").classList.add("hidden");
