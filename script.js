@@ -101,7 +101,10 @@ async function showSessionManager() {
     const list = document.getElementById("sessionList");
 
     list.innerHTML = "";
-
+if (!data || data.length === 0) {
+    list.innerHTML = "<p>No sessions found.</p>";
+    return;
+}
     data.forEach(session => {
         console.log(JSON.stringify(session));
         list.innerHTML += `
@@ -131,28 +134,24 @@ async function showSessionManager() {
 }
 
 async function deleteSession(id) {
-console.log("Clicked ID =", id);
-    alert("Clicked ID = " + id);
-    const ok = confirm(
-        "Delete this session?\n\nThis cannot be undone."
-    );
 
-    if (!ok) return;
+    if (!confirm("Delete this session?\n\nThis cannot be undone.")) {
+        return;
+    }
 
     const { error } = await db
-    .from("sessions")
-    .delete()
-    .eq("id", Number(id));
+        .from("sessions")
+        .delete()
+        .eq("id", id);
 
-console.log("DELETE ID =", id);
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
-console.log("DELETE ERROR =", error);
+    await showSessionManager();
 
-if (error) {
-    alert(error.message);
-    return;
 }
-
 alert("Session deleted.");
 location.reload();
 await showSessionManager();
