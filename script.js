@@ -158,8 +158,10 @@ async function deleteSession(id) {
         return;
     }
 
-    // 정상적으로 지워졌다면 목록을 새로고침합니다.
-    await showSessionManager();
+    alert("Session deleted successfully!");
+    
+    // 화면을 완전히 새로고침하여 지워진 세션 목록을 새로 반영합니다.
+    window.location.reload();
 }
 
 async function startSession() {
