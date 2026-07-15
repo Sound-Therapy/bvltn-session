@@ -73,7 +73,7 @@ function showNewSession() {
         .remove("hidden");
 
 }
-function showSessionManager() {
+async function showSessionManager() {
 
     document
         .getElementById("newSessionPanel")
@@ -84,6 +84,19 @@ function showSessionManager() {
         .getElementById("sessionManagerPanel")
         .classList
         .remove("hidden");
+
+    const { data, error } = await db
+        .from("sessions")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    console.log(data);
+
+    if (error) {
+
+        alert(error.message);
+
+    }
 
 }
 async function startSession() {
