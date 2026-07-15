@@ -66,7 +66,10 @@ document
 
 }
 function showNewSession() {
-
+document
+    .getElementById("sessionManagerPanel")
+    .classList
+    .add("hidden");
     document
         .getElementById("newSessionPanel")
         .classList
