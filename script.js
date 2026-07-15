@@ -139,14 +139,13 @@ console.log("Clicked ID =", id);
 
     if (!ok) return;
 
-    const { data, error } = await db
+    const { error } = await db
     .from("sessions")
     .delete()
-    .eq("id", Number(id))
-    .select();
+    .eq("id", Number(id));
 
 console.log("DELETE ID =", id);
-console.log("DELETE DATA =", data);
+
 console.log("DELETE ERROR =", error);
 
 if (error) {
