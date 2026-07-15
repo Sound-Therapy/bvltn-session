@@ -154,9 +154,7 @@ alert("Deleted!");
 
 showSessionManager();
 
-console.log(result);
 
-alert(JSON.stringify(result, null, 2));
 
 showSessionManager();
 
