@@ -110,8 +110,12 @@ data.forEach(session => {
 
 <p><b>Code:</b> ${session.session_token}</p>
 
-<button>
+<button class="openBtn">
     Open
+</button>
+
+<button class="deleteBtn">
+    Delete
 </button>
 
 <hr>
