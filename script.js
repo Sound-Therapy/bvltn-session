@@ -116,8 +116,7 @@ data.forEach(session => {
 
 <button
     class="deleteBtn"
-    onclick="deleteSession('${session.session_name}')">
-
+    onclick="deleteSession(${session.id})"
     Delete
 
 </button>
@@ -141,7 +140,7 @@ async function deleteSession(id) {
     const result = await db
     .from("sessions")
     .delete()
-    .eq("session_name", id)
+    .eq("id", id)
     .select();
 
 console.log(result);
