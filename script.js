@@ -139,11 +139,13 @@ async function deleteSession(id) {
         return;
     }
 
-    const { error } = await db
-        .from("sessions")
-        .delete()
-        .eq("id", id);
-
+    const { data, error } = await db
+    .from("sessions")
+    .delete()
+    .eq("id", id)
+    .select();
+console.log(data);
+console.log(error);
     if (error) {
         alert(error.message);
         return;
