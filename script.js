@@ -154,13 +154,11 @@ if (error) {
     return;
 }
 
-alert("Deleted!");
+alert("Session deleted.");
 
-showSessionManager();
+await showSessionManager();
 
 
-
-showSessionManager();
 
 }
 
