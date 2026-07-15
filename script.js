@@ -101,32 +101,7 @@ const list = document.getElementById("sessionList");
 
 list.innerHTML = "";
 
-data.forEach(session => {
-
-    list.innerHTML += `
-        <div class="card">
-
-            <h3>${session.session_name}</h3>
-
-<b>Code:</b> ${session.s
-
-<button class="openBtn">
-    Open
-</button>
-
-<button
-    class="deleteBtn"
-    onclick="deleteSession(${session.id})"
-    Delete
-
-</button>
-
-<hr>
-
-        </div>
-    `;
-
-});
+ata.forEac
 }
 
 async function deleteSession(id) {
