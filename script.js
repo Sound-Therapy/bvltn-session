@@ -152,13 +152,6 @@ async function deleteSession(id) {
     await showSessionManager();
 
 }
-alert("Session deleted.");
-location.reload();
-await showSessionManager();
-
-
-
-}
 
 async function startSession() {
 
