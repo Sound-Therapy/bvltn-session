@@ -52,7 +52,10 @@ function login() {
         hideAll();
 
         document.getElementById("producerPage").classList.remove("hidden");
-
+document
+    .getElementById("newSessionPanel")
+    .classList
+    .add("hidden");
     }
 
     else {
@@ -62,7 +65,14 @@ function login() {
     }
 
 }
+function showNewSession() {
 
+    document
+        .getElementById("newSessionPanel")
+        .classList
+        .remove("hidden");
+
+}
 async function startSession() {
 
     document
