@@ -97,7 +97,25 @@ async function showSessionManager() {
         alert(error.message);
 
     }
+const list = document.getElementById("sessionList");
 
+list.innerHTML = "";
+
+data.forEach(session => {
+
+    list.innerHTML += `
+        <div class="card">
+
+            <h3>${session.session_name}</h3>
+
+            <p><b>Code:</b> ${session.session_token}</p>
+
+            <hr>
+
+        </div>
+    `;
+
+});
 }
 async function startSession() {
 
