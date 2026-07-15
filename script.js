@@ -154,7 +154,7 @@ if (error) {
 }
 
 alert("Session deleted.");
-
+location.reload();
 await showSessionManager();
 
 
