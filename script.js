@@ -129,6 +129,7 @@ async function showSessionManager() {
 
 async function deleteSession(id) {
 console.log("Clicked ID =", id);
+    alert("Clicked ID = " + id);
     const ok = confirm(
         "Delete this session?\n\nThis cannot be undone."
     );
