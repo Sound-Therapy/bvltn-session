@@ -51,17 +51,23 @@ function backToHome() {
 
     window.currentSession = null;
 
-    document.getElementById("sessionPanel").classList.add("hidden");
-    document.getElementById("sessionManagerPanel").classList.add("hidden");
-    document.getElementById("newSessionPanel").classList.add("hidden");
+    localStorage.removeItem("artistMode");
+    localStorage.removeItem("artistSession");
 
     hideAll();
 
     document.getElementById("homePage").classList.remove("hidden");
 
-    document.getElementById("producerLink").style.display = "";
+    document.getElementById("sessionPanel").classList.add("hidden");
+    document.getElementById("sessionManagerPanel").classList.add("hidden");
+    document.getElementById("newSessionPanel").classList.add("hidden");
+
     document.getElementById("joinPanel").style.display = "";
+    document.getElementById("producerLink").style.display = "";
+
     document.getElementById("instructionPanel").classList.add("hidden");
+
+    document.getElementById("sessionCode").value = "";
 
 }
 function showLogin() {
