@@ -320,10 +320,9 @@ async function recordWithGuide() {
 
         recordedChunks = [];
 
-        console.log(MediaRecorder.isTypeSupported("audio/mp4"));
-        console.log(MediaRecorder.isTypeSupported("audio/webm"));
-        console.log(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"));
-
+        alert("MP4: " + MediaRecorder.isTypeSupported("audio/mp4"));
+        alert("WEBM: " + MediaRecorder.isTypeSupported("audio/webm"));
+        alert("WEBM OPUS: " + MediaRecorder.isTypeSupported("audio/webm;codecs=opus"));
 mediaRecorder = new MediaRecorder(stream);
 
         mediaRecorder.ondataavailable = function(event) {
