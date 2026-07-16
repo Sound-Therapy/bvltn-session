@@ -3,7 +3,8 @@
 // ===============================
 
 // ---------- Supabase ----------
-
+let mediaRecorder = null;
+let recordedChunks = [];
 const SUPABASE_URL = "https://mipxgufdyykcudfwsijy.supabase.co";
 console.log(SUPABASE_URL);
 const SUPABASE_KEY =
@@ -79,10 +80,24 @@ function showLogin() {
 }
 function stopAudio() {
 
-    if (!currentAudio) return;
+    if (currentAudio) {
 
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+
+    }
+
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+
+        mediaRecorder.stop();
+
+    }
+
+    if (window.recordStream) {
+
+        window.recordStream.getTracks().forEach(track => track.stop());
+
+    }
 
 }
 function login() {
@@ -284,6 +299,22 @@ async function recordWithGuide() {
             });
 
         window.recordStream = stream;
+
+        recordedChunks = [];
+
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = function(event) {
+
+            if (event.data.size > 0) {
+
+                recordedChunks.push(event.data);
+
+            }
+
+        };
+
+        mediaRecorder.start();
 
         await playWithGuide();
 
