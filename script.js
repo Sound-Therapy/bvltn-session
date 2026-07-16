@@ -209,7 +209,19 @@ async function playWithGuide() {
         .from("guides")
         .getPublicUrl(window.currentSession.guide_path);
 
-    alert(data.publicUrl);
+    const audio = new Audio(data.publicUrl);
+
+    audio.onerror = () => {
+        alert("Audio failed to load.");
+    };
+
+    audio.oncanplay = () => {
+        alert("Audio loaded.");
+    };
+
+    audio.play().catch(err => {
+        alert(err.message);
+    });
 
 }
    
