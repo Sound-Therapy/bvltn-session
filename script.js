@@ -344,8 +344,8 @@ alert(mediaRecorder.mimeType);
 };
         mediaRecorder.start();
 
+        alert("Microphone ready.\n\nPress OK to start recording.");
         await playWithGuide();
-
     }
 
     catch (err) {
