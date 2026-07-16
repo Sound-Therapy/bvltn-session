@@ -154,7 +154,68 @@ function playRecording() {
         return;
 
     }
+    const fileName =
+    "take1.webm";
+    const { error } =
+    await db.storage
+        .from("recordings")
+        .upload(
 
+            `${window.currentSession.session_token}/${fileName}`,
+
+            recordedBlob,
+
+            {
+                upsert: true
+            }
+
+        );
+    if (error) {
+
+    alert(error.message);
+
+    return;
+
+}
+    alert("Take 1 uploaded!");
+async function submitRecording() {
+
+    if (!recordedBlob) {
+
+        alert("No recording.");
+
+        return;
+
+    }
+
+    const fileName = "take1.webm";
+
+    const { error } =
+        await db.storage
+            .from("recordings")
+            .upload(
+
+                `${window.currentSession.session_token}/${fileName}`,
+
+                recordedBlob,
+
+                {
+                    upsert: true
+                }
+
+            );
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    alert("Take 1 uploaded!");
+
+}
     currentAudio = new Audio(
         URL.createObjectURL(recordedBlob)
     );
@@ -612,6 +673,9 @@ async function testBackend() {
 // ---------- Events ----------
 
 document.addEventListener("DOMContentLoaded", () => {
+    document
+    .getElementById("submitBtn")
+    ?.addEventListener("click", submitRecording);
     document.getElementById("recordStopBtn")
     ?.addEventListener("click", stopAudio);
     document.getElementById("rerecordBtn")
