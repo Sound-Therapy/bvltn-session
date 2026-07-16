@@ -123,100 +123,60 @@ I'm Ready
 </div>
 <div id="sessionPanel" class="hidden">
 
-<h2>Current Session</h2>
-<button id="backToHomeBtn">
-    ← Back to home
-</button>
-<p>
-<b>Session:</b>
-<span id="currentSessionName"></span>
-</p>
+    <h2>Current Session</h2>
 
-<h3>Practice</h3>
-
-<button id="practiceGuideBtn">
-Practice with Guide
-</button>
-
-<button id="practiceNoGuideBtn">
-Practice without Guide
-</button>
-<button id="stopBtn">
-  Stop
-</button>
-  <div id="recordingControls" class="hidden">
-
-    <button id="playRecordingBtn">
-        Play Recording
+    <button id="backToHomeBtn">
+        ← Back to Home
     </button>
 
-    <button id="rerecordBtn">
-        Re-record
+    <p>
+        <b>Session:</b>
+        <span id="currentSessionName"></span>
+    </p>
+
+    <hr>
+
+    <h3>Practice</h3>
+
+    <button id="practiceGuideBtn">
+        Practice with Guide
     </button>
 
-    <button id="submitBtn">
-        Submit
+    <button id="practiceNoGuideBtn">
+        Practice without Guide
     </button>
+
+    <button id="stopBtn">
+        Stop
+    </button>
+
+    <hr>
+
+    <h3>Lyrics</h3>
+
+    <pre id="currentLyrics"></pre>
+
+    <button id="recordGuideBtn">
+        🎙 Record with Guide
+    </button>
+
+    <div id="recordingControls" class="hidden">
+
+        <button id="playRecordingBtn">
+            ▶ Play Recording
+        </button>
+
+        <button id="rerecordBtn">
+            🔄 Re-record
+        </button>
+
+        <button id="submitBtn">
+            ✅ Submit
+        </button>
+
+    </div>
 
 </div>
-</button>
-<hr>
-
-<h3>Lyrics</h3>
-
-<pre id="currentLyrics"></pre>
-
-<button id="recordGuideBtn">
-    Record with Guide
-</button>
-
-<div id="recordingControls" class="hidden">
-
-    <button id="playRecordingBtn">
-        Play Recording
-    </button>
-
-    <button id="rerecordBtn">
-        Re-record
-    </button>
-
-    <button id="submitBtn">
-        Submit
-    </button>
-
-</div>
-
-<hr>
-
-<h3>Recording</h3>
-
-<button id="recordGuideBtn">
-<hr>
-
-<h3>Recording</h3>
-
-<button id="recordGuideBtn">
-🎙 Record with Guide
-</button>
-
-<button id="recordNoGuideBtn">
-🎙 Record without Guide
-</button>
-
-<hr>
-
-<div>
-
-<button id="take1" disabled>①</button>
-<button id="take2" disabled>②</button>
-<button id="take3" disabled>③</button>
-<button id="take4" disabled>④</button>
-<button id="take5" disabled>⑤</button>
-
-</div>
-
-</div>
-<script src="script.js"></script>
 <audio id="audioPlayer" controls style="display:none;"></audio>
 </body>
 </html>
