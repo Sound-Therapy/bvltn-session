@@ -570,6 +570,8 @@ async function testBackend() {
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("logoutBtn")
     ?.addEventListener("click", logout);
+    document.getElementById("playRecordingBtn")
+    ?.addEventListener("click", playRecording);
     document.getElementById("backToHomeBtn")
     ?.addEventListener("click", backToHome);
     document.getElementById("startBtn")
