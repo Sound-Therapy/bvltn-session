@@ -210,19 +210,24 @@ async function playWithGuide() {
         return;
     }
 
-    const { data } = db.storage
+    const { data, error } = await db.storage
         .from("guides")
-        .getPublicUrl(window.currentSession.guide_path);
+        .createSignedUrl(
+            window.currentSession.guide_path,
+            3600
+        );
 
-    console.log(data.publicUrl);
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
-    const audio = new Audio(data.publicUrl);
+    const audio = new Audio(data.signedUrl);
 
     try {
         await audio.play();
     }
     catch (e) {
-        console.error(e);
         alert(e.message);
     }
 
@@ -231,20 +236,31 @@ async function playWithGuide() {
 
 async function playWithoutGuide() {
 
-    if (!window.currentSession) return;
+    if (!window.currentSession) {
+        alert("No current session");
+        return;
+    }
 
-    const { data } = db.storage
+    const { data, error } = await db.storage
         .from("instrumentals")
-        .getPublicUrl(window.currentSession.instrumental_path);
+        .createSignedUrl(
+            window.currentSession.instrumental_path,
+            3600
+        );
 
-    new Audio(data.publicUrl).play();
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
-}
-async function startSession() {
+    const audio = new Audio(data.signedUrl);
 
-    document
-        .getElementById("sessionCode")
-        .focus();
+    try {
+        await audio.play();
+    }
+    catch (e) {
+        alert(e.message);
+    }
 
 }
 
