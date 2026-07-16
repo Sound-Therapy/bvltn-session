@@ -70,3 +70,44 @@ input{
     100%{opacity:1;}
 
 }
+#recordingModal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.5);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+#recordingModal.hidden{
+
+    display:none;
+
+}
+
+.modalContent{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+    min-width:260px;
+
+    text-align:center;
+
+}
