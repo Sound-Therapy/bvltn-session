@@ -199,6 +199,7 @@ async function submitRecording() {
     }
 
     alert("Take 1 uploaded!");
+    closeRecordingModal();
 
 }
 
