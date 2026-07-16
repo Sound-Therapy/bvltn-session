@@ -155,6 +155,18 @@ function playRecording() {
     currentAudio.play();
 
 }
+function rerecord() {
+
+    recordedBlob = null;
+
+    document
+        .getElementById("recordingControls")
+        .classList
+        .add("hidden");
+
+    recordWithGuide();
+
+}
 async function showSessionManager() {
 
     document
@@ -322,7 +334,10 @@ async function recordWithGuide() {
         window.recordStream = stream;
 
         recordedChunks = [];
-
+document
+    .getElementById("recordingControls")
+    .classList
+    .add("hidden");
         
 mediaRecorder = new MediaRecorder(stream);
 
@@ -341,7 +356,10 @@ mediaRecorder = new MediaRecorder(stream);
     type: mediaRecorder.mimeType
 });
     alert("Recording finished.");
-
+document
+    .getElementById("recordingControls")
+    .classList
+    .remove("hidden");
 };
         mediaRecorder.start();
 
@@ -571,7 +589,8 @@ async function testBackend() {
 // ---------- Events ----------
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+    document.getElementById("rerecordBtn")
+    ?.addEventListener("click", rerecord);
     document.getElementById("logoutBtn")
     ?.addEventListener("click", logout);
     document.getElementById("playRecordingBtn")
