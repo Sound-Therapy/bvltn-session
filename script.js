@@ -167,7 +167,42 @@ alert("Deleting ID = " + numericId);
 
 await showSessionManager();
 }
+async function openSession(id) {
 
+    const { data, error } = await db
+        .from("sessions")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    document
+        .getElementById("sessionManagerPanel")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("sessionPanel")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("currentSessionName")
+        .innerText =
+        data.session_name;
+
+    document
+        .getElementById("currentLyrics")
+        .innerText =
+        data.lyrics;
+
+    window.currentSession = data;
+
+}
 async function startSession() {
 
     document
