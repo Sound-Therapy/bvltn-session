@@ -6,6 +6,7 @@
 let recordedBlob = null;
 let mediaRecorder = null;
 let recordedChunks = [];
+let currentTake = 1;
 const SUPABASE_URL = "https://mipxgufdyykcudfwsijy.supabase.co";
 console.log(SUPABASE_URL);
 const SUPABASE_KEY =
@@ -173,7 +174,7 @@ async function submitRecording() {
 
     }
 
-    const fileName = "take1.webm";
+    const fileName = `take${currentTake}.webm`;
 
     const path =
         `${window.currentSession.session_token}/${fileName}`;
@@ -200,7 +201,7 @@ async function submitRecording() {
 
     }
 
-    alert("Take 1 uploaded!");
+    alert(`Take ${currentTake} uploaded!`);
 
     closeRecordingModal();
 
