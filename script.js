@@ -175,10 +175,24 @@ async function submitRecording() {
 
     const fileName = "take1.webm";
 
-    const { error } =
-        await db.storage
-            .from("recordings")
-            .upload(
+    const path = `${window.currentSession.session_token}/${fileName}`;
+
+console.log("Bucket:", "recordings");
+console.log("Path:", path);
+
+const { data, error } =
+    await db.storage
+        .from("recordings")
+        .upload(
+            path,
+            recordedBlob,
+            {
+                upsert: true
+            }
+        );
+
+console.log("Upload data:", data);
+console.log("Upload error:", error);
 
                 `${window.currentSession.session_token}/${fileName}`,
 
