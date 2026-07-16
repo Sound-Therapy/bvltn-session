@@ -359,10 +359,7 @@ async function testBackend() {
 
     // Show Session Panel
 
-    document
-        .getElementById("sessionPanel")
-        .classList
-        .remove("hidden");
+    
 
     document
         .getElementById("currentSessionName")
