@@ -205,13 +205,14 @@ async function openSession(id) {
 }
 async function playWithGuide() {
 
-    if (!window.currentSession) return;
+    alert("clicked");
 
-    const { data } = db.storage
-        .from("guides")
-        .getPublicUrl(window.currentSession.guide_path);
+    if (!window.currentSession) {
+        alert("No current session");
+        return;
+    }
 
-    new Audio(data.publicUrl).play();
+    alert(window.currentSession.guide_path);
 
 }
 
