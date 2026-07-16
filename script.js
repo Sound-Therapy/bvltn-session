@@ -56,6 +56,10 @@ document
     .getElementById("newSessionPanel")
     .classList
     .add("hidden");
+document
+    .getElementById("sessionPanel")
+    .classList
+    .add("hidden");
     }
 
     else {
@@ -238,10 +242,7 @@ document
     .getElementById("joinPanel")
     .style
     .display = "none";
-document
-    .getElementById("sessionPanel")
-    .classList
-    .add("hidden");
+
 
     document
         .getElementById("currentSessionName")
