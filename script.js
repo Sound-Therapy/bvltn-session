@@ -28,7 +28,14 @@ function hideAll() {
     document.getElementById("producerPage").classList.add("hidden");
 
 }
+function closeRecordingModal(){
 
+    document
+        .getElementById("recordingModal")
+        .classList
+        .add("hidden");
+
+}
 function goHome() {
 localStorage.removeItem("producerLoggedIn");
     hideAll();
@@ -160,9 +167,9 @@ function rerecord() {
     recordedBlob = null;
 
     document
-        .getElementById("recordingControls")
-        .classList
-        .add("hidden");
+    .getElementById("recordingModal")
+    .classList
+    .remove("hidden");
 
     recordWithGuide();
 
@@ -335,7 +342,7 @@ async function recordWithGuide() {
 
         recordedChunks = [];
 document
-    .getElementById("recordingControls")
+    .getElementById("recordingModal")
     .classList
     .add("hidden");
         
