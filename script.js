@@ -18,7 +18,7 @@ const db = window.supabase.createClient(
 
 console.log("BVLTNE Connected");
 
-let audioPlayer = null;let audioPlayer = null;
+let currentAudio = null;
 // ---------- Page Control ----------
 
 function hideAll() {
@@ -297,11 +297,11 @@ async function playWithGuide() {
         return;
     }
 
-    audioPlayer.src = data.signedUrl;
+    currentAudio = new Audio(data.signedUrl);
 
 try {
 
-    await audioPlayer.play();
+    await currentAudio.play();
 
 }
 catch (e) {
@@ -309,7 +309,6 @@ catch (e) {
     alert(e.message);
 
 }
-
 }
 async function recordWithGuide() {
 
@@ -574,7 +573,7 @@ async function testBackend() {
 // ---------- Events ----------
 
 document.addEventListener("DOMContentLoaded", () => {
-    audioPlayer = document.getElementById("audioPlayer");
+    
     document.getElementById("logoutBtn")
     ?.addEventListener("click", logout);
     document.getElementById("playRecordingBtn")
