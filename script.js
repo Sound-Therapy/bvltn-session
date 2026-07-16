@@ -47,6 +47,19 @@ function logout() {
         .remove("hidden");
 
 }
+function backToManager() {
+
+    document
+        .getElementById("sessionPanel")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("sessionManagerPanel")
+        .classList
+        .remove("hidden");
+
+}
 function showLogin() {
 
     hideAll();
@@ -492,6 +505,8 @@ async function testBackend() {
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("logoutBtn")
     ?.addEventListener("click", logout);
+    document.getElementById("backToManagerBtn")
+    ?.addEventListener("click", backToManager);
     document.getElementById("startBtn")
         ?.addEventListener("click", startSession);
 
