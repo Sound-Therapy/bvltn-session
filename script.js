@@ -204,7 +204,7 @@ async function submitRecording() {
     if (currentTake < 5) {
 
         alert(`Take ${currentTake} uploaded!`);
-
+        console.log("CURRENT TAKE =", currentTake);
         currentTake++;
 
         document.getElementById("recordGuideBtn").innerText =
