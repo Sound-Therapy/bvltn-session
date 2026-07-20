@@ -343,17 +343,12 @@ async function openSession(id) {
         .classList
         .remove("hidden");
 
-    document
-        .getElementById("currentSessionName")
-        .innerText =
-        data.session_name;
+   document
+    .getElementById("currentSessionName")
+    .innerText =
+    data.session_name;
 
-    document
-        .getElementById("currentLyrics")
-        .innerText =
-        data.lyrics;
-
-    window.currentSession = data;
+window.currentSession = data;
 const { data: takes, error: takeError } =
     await db.storage
         .from("recordings")
