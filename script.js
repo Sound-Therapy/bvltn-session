@@ -339,9 +339,9 @@ async function openSession(id) {
         .add("hidden");
 
     document
-        .getElementById("sessionPanel")
-        .classList
-        .remove("hidden");
+    .getElementById("producerSessionPanel")
+    .classList
+    .remove("hidden");
 
     document
         .getElementById("currentSessionName")
