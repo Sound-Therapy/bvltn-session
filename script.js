@@ -379,11 +379,45 @@ files.forEach(file => {
 
     if (file.name === ".emptyFolderPlaceholder") return;
 
+    files.forEach(file => {
+
+    if (file.name === ".emptyFolderPlaceholder") return;
+
+    const takeName = file.name.replace(".webm", "");
+
     takeList.innerHTML += `
-        <div style="padding:10px;border-bottom:1px solid #444;">
-            🎤 ${file.name}
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:10px;
+            border-bottom:1px solid #444;
+        ">
+
+            <span>🎤 ${takeName}</span>
+
+            <div>
+                <button class="playTakeBtn">
+                    ▶ Play
+                </button>
+
+                <button class="downloadTakeBtn">
+                    ⬇ Download
+                </button>
+            </div>
+
         </div>
     `;
+
+});
+
+takeList.innerHTML += `
+    <div style="text-align:center;margin-top:20px;">
+        <button id="deleteAllTakesBtn">
+            🗑 Delete All Takes
+        </button>
+    </div>
+`;
 });
 }
 async function playWithGuide() {
