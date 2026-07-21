@@ -1028,3 +1028,26 @@ async function blobToWav(webmBlob) {
     return new Blob([buffer], { type: "audio/wav" });
 
 }
+async function downloadWav(fileName) {
+
+    const { data, error } = await db.storage
+        .from("recordings")
+        .createSignedUrl(
+            `${window.currentSession.session_token}/${fileName}`,
+            60
+        );
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    const a = document.createElement("a");
+    a.href = data.signedUrl;
+    a.download = fileName;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+}
