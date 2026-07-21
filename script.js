@@ -377,12 +377,13 @@ if (!files || files.length === 0) {
 takeList.innerHTML = "";
 files.forEach(file => {
 
+    if (file.name === ".emptyFolderPlaceholder") return;
+
     takeList.innerHTML += `
         <div style="padding:10px;border-bottom:1px solid #444;">
             🎤 ${file.name}
         </div>
     `;
-
 });
 }
 async function playWithGuide() {
