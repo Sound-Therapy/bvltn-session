@@ -398,7 +398,7 @@ files.forEach(file => {
 
    
 
-    const takeName = file.name.replace(".webm", "");
+   const takeName = file.name.replace(".wav", "");
 
     takeList.innerHTML += `
 <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #333;">
@@ -1058,7 +1058,8 @@ async function deleteAllTakes() {
     const { error: removeError } = await db.storage
         .from("recordings")
         .remove(paths);
-
+console.log(paths);
+console.log(removeError);
     if (removeError) {
         alert(removeError.message);
         return;
