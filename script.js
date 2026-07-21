@@ -244,7 +244,10 @@ async function showSessionManager() {
         .getElementById("newSessionPanel")
         .classList
         .add("hidden");
-
+document
+    .getElementById("producerSessionPanel")
+    .classList
+    .add("hidden");
     document
         .getElementById("sessionManagerPanel")
         .classList
