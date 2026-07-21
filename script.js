@@ -393,7 +393,7 @@ if (!files || files.length === 0) {
 
 takeList.innerHTML = "";
 files.forEach(file => {
-
+console.log(file);
     if (file.name === ".emptyFolderPlaceholder") return;
 
    
