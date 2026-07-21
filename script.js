@@ -180,7 +180,6 @@ async function submitRecording() {
 
     const fileName = `take${currentTake}.wav`;
     console.log(fileName);
-    const fileName = `take${currentTake}.wav`;
 
 const path =
     `${window.currentSession.session_token}/${fileName}`;
