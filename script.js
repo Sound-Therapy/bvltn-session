@@ -679,6 +679,39 @@ document
         .innerText =
         session.lyrics;
     window.currentSession = session;
+    const { data: existingFiles } = await db.storage
+    .from("recordings")
+    .list(session.session_token);
+
+if (existingFiles) {
+
+    const takes = existingFiles
+        .filter(f => f.name.endsWith(".wav"))
+        .map(f => {
+            const m = f.name.match(/take(\d+)\.wav/i);
+            return m ? Number(m[1]) : 0;
+        });
+
+   currentTake = takes.length
+    ? Math.max(...takes) + 1
+    : 1;
+
+if (currentTake > 5) {
+
+    currentTake = 5;
+
+    document.getElementById("recordGuideBtn").disabled = true;
+    document.getElementById("recordGuideBtn").innerText =
+        "All Takes Submitted";
+
+}
+else {
+
+    document.getElementById("recordGuideBtn").disabled = false;
+    document.getElementById("recordGuideBtn").innerText =
+        `Record Take ${currentTake}`;
+
+}
     localStorage.setItem("artistMode", "true");
     localStorage.setItem("artistSession", JSON.stringify(session));
 }
