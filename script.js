@@ -89,10 +89,10 @@ async function downloadWav(fileName) {
     }
     catch (err) {
 
-        console.error(err);
-        alert("WAV conversion failed.");
+    console.error(err);
+    alert(err.message);
 
-    }
+}
 
 }
 // ---------- Page Control ----------
