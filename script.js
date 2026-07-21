@@ -23,7 +23,6 @@ let currentAudio = null;
 
 
 
-}
 // ---------- Page Control ----------
 
 function hideAll() {
