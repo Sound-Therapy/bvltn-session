@@ -344,9 +344,13 @@ async function openSession(id) {
     .remove("hidden");
 
     document
-        .getElementById("currentSessionName")
-        .innerText =
-        data.session_name;
+    .getElementById("producerSessionName")
+    .innerText =
+    data.session_name;
+    document
+    .getElementById("producerSessionCode")
+    .innerText =
+    data.session_token;
 
     document
         .getElementById("currentLyrics")
