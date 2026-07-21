@@ -352,10 +352,7 @@ async function openSession(id) {
     .innerText =
     data.session_token;
 
-    document
-        .getElementById("currentLyrics")
-        .innerText =
-        data.lyrics;
+    
 
     window.currentSession = data;
     const { data: files, error: fileError } =
