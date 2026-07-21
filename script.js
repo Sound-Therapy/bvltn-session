@@ -715,7 +715,7 @@ else {
     localStorage.setItem("artistMode", "true");
     localStorage.setItem("artistSession", JSON.stringify(session));
 }
-
+}
 // ---------- Save Session ----------
 
 async function testBackend() {
