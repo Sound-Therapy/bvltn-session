@@ -341,7 +341,7 @@ if (!data || data.length === 0) {
 }
 
 async function deleteSession(id) {
-
+alert("deleteSession started");
     if (!confirm("Delete this session?\n\nThis cannot be undone.")) {
         return;
     }
