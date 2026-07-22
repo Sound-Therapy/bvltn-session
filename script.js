@@ -160,10 +160,7 @@ function playRecording() {
         return;
 
     }
-const submitBtn = document.getElementById("submitBtn");
 
-submitBtn.disabled = true;
-submitBtn.innerText = "⏳ Converting...";
     currentAudio = new Audio(
         URL.createObjectURL(recordedBlob)
     );
