@@ -327,7 +327,7 @@ if (!data || data.length === 0) {
 </button>
                 <button
                     class="deleteBtn"
-                    onclick="deleteSession(${JSON.stringify(session.id)})">
+                    onclick="(${JSON.stringify(session.id)})">
                     Delete
                 </button>
 
@@ -348,9 +348,25 @@ async function deleteSession(id) {
 
     // 데이터타입 문제를 방지하기 위해 id를 숫자(Number)로 확실하게 변환합니다.
     const numericId = Number(id);
+    const { data: session, error: sessionError } = await db
+    .from("sessions")
+    .select("*")
+    .eq("id", numericId)
+    .single();
+
+if (sessionError) {
+    alert(sessionError.message);
+    return;
+}
 alert("Deleting ID = " + numericId);
     console.log("Trying to delete session ID:", numericId);
+await db.storage
+    .from("instrumentals")
+    .remove([session.instrumental_path]);
 
+await db.storage
+    .from("guides")
+    .remove([session.guide_path]);
     const { data, error } = await db
         .from("sessions")
         .delete()
