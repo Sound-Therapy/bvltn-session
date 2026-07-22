@@ -748,7 +748,49 @@ else {
 }
 }
 // ---------- Save Session ----------
+async function saveSession() {
 
+    if (editMode) {
+
+        await updateSession();
+
+    } else {
+
+        await testBackend();
+
+    }
+
+}
+async function updateSession() {
+
+    const sessionName = document.getElementById("sessionName").value.trim();
+    const lyrics = document.getElementById("lyrics").value.trim();
+
+    const { error } = await supabase
+        .from("sessions")
+        .update({
+            session_name: sessionName,
+            lyrics: lyrics
+        })
+        .eq("id", editingSessionId);
+
+    if (error) {
+
+        alert(error.message);
+        return;
+
+    }
+
+    alert("Session updated!");
+
+    editMode = false;
+
+    await loadSessions();
+
+    document.getElementById("newSessionPanel").classList.add("hidden");
+    document.getElementById("sessionManagerPanel").classList.remove("hidden");
+
+}
 async function testBackend() {
 
     const sessionName =
