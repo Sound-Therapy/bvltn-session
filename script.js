@@ -7,6 +7,8 @@ let recordedBlob = null;
 let mediaRecorder = null;
 let recordedChunks = [];
 let currentTake = 1;
+let editMode = false;
+let editingSessionId = null;
 const SUPABASE_URL = "https://mipxgufdyykcudfwsijy.supabase.co";
 console.log(SUPABASE_URL);
 const SUPABASE_KEY =
@@ -149,6 +151,37 @@ document
         .getElementById("newSessionPanel")
         .classList
         .remove("hidden");
+
+}
+async function editSession() {
+
+    editMode = true;
+    editingSessionId = window.currentSession.id;
+
+    document
+        .getElementById("producerSessionPanel")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("newSessionPanel")
+        .classList
+        .remove("hidden");
+
+    document.getElementById("sessionName").value =
+        window.currentSession.session_name;
+
+    document.getElementById("lyrics").value =
+        window.currentSession.lyrics;
+
+    document.getElementById("instrumentalName").innerText =
+        window.currentSession.instrumental_path.split("/").pop();
+
+    document.getElementById("guideName").innerText =
+        window.currentSession.guide_path.split("/").pop();
+
+    document.getElementById("createSessionBtn").innerText =
+        "Save Changes";
 
 }
 function playRecording() {
