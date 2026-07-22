@@ -766,7 +766,7 @@ async function updateSession() {
     const sessionName = document.getElementById("sessionName").value.trim();
     const lyrics = document.getElementById("lyrics").value.trim();
 
-    const { error } = await supabase
+    const { error } = await db
         .from("sessions")
         .update({
             session_name: sessionName,
@@ -785,7 +785,7 @@ async function updateSession() {
 
     editMode = false;
 
-    await loadSessions();
+    await showSessionManager();
 
     document.getElementById("newSessionPanel").classList.add("hidden");
     document.getElementById("sessionManagerPanel").classList.remove("hidden");
