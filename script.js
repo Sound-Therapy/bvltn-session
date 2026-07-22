@@ -327,7 +327,7 @@ if (!data || data.length === 0) {
 </button>
                 <button
                     class="deleteBtn"
-                    onclick="(${JSON.stringify(session.id)})">
+                    onclick="deleteSession(${session.id})">
                     Delete
                 </button>
 
