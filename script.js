@@ -762,7 +762,7 @@ async function saveSession() {
 
 }
 async function updateSession() {
-
+console.log("editingSessionId =", editingSessionId);
     const sessionName = document.getElementById("sessionName").value.trim();
     const lyrics = document.getElementById("lyrics").value.trim();
 
