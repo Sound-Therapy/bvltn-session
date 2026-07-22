@@ -154,7 +154,7 @@ document
 
 }
 async function editSession() {
-
+console.log(window.currentSession);
     editMode = true;
     editingSessionId = window.currentSession.id;
 
