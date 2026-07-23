@@ -868,26 +868,7 @@ async function joinSession() {
 
     window.currentSession = session;
 
-    const { data: existingFiles } = await db.storage
-        .from("recordings")
-        .list(session.session_token);
-
-    if (existingFiles) {
-
-        const takes = existingFiles
-            .filter(f => f.name.endsWith(".wav"))
-            .map(f => {
-
-                const m = f.name.match(/take(\d+)\.wav/i);
-                return m ? Number(m[1]) : 0;
-
-            });
-
-        currentTake = takes.length
-            ? Math.max(...takes) + 1
-            : 1;
-
-    }
+    await refreshTakeNumber();
 
     if (currentTake > 5) {
 
@@ -1365,3 +1346,69 @@ async function downloadWav(fileName) {
     URL.revokeObjectURL(url);
 
 }
+async function refreshTakeNumber() {
+
+    const { data: existingFiles } = await db.storage
+        .from("recordings")
+        .list(window.currentSession.session_token);
+
+    const takes = (existingFiles || [])
+        .filter(f => f.name.endsWith(".wav"))
+        .map(f => {
+            const m = f.name.match(/take(\d+)\.wav/i);
+            return m ? Number(m[1]) : 0;
+        });
+
+    currentTake =
+        takes.length ? Math.max(...takes) + 1 : 1;
+
+    if (currentTake > 5) {
+
+        currentTake = 5;
+
+        recordGuideBtn.disabled = true;
+        recordNoGuideBtn.disabled = true;
+
+        recordGuideBtn.innerText = "All Takes Submitted";
+        recordNoGuideBtn.innerText = "All Takes Submitted";
+
+    } else {
+
+        recordGuideBtn.disabled = false;
+        recordNoGuideBtn.disabled = false;
+
+        recordGuideBtn.innerText =
+            `🎤 Record Take ${currentTake} with Guide`;
+
+        recordNoGuideBtn.innerText =
+            `🎵 Record Take ${currentTake} without Guide`;
+
+    }
+
+}
+window.addEventListener("load", async function () {
+
+    const savedSession =
+        JSON.parse(localStorage.getItem("artistSession"));
+
+    const artistMode =
+        localStorage.getItem("artistMode");
+
+    if (!savedSession || artistMode !== "true")
+        return;
+
+    window.currentSession = savedSession;
+
+    document.getElementById("currentSessionName").innerText =
+        savedSession.session_name;
+
+    document.getElementById("currentLyrics").innerText =
+        savedSession.lyrics;
+
+    hideAll();
+
+    document.getElementById("sessionPanel").classList.remove("hidden");
+
+    await refreshTakeNumber();
+
+});
