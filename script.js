@@ -549,21 +549,37 @@ catch (e) {
 
 }
 }
-currentAudio = new Audio();
+async function playWithoutGuide() {
 
-currentAudio.preload = "auto";
-currentAudio.src = data.signedUrl;
+    if (!window.currentSession) {
+        alert("No current session");
+        return;
+    }
 
-await new Promise((resolve, reject) => {
+    const { data, error } = await db.storage
+        .from("instrumentals")
+        .createSignedUrl(
+            window.currentSession.instrumental_path,
+            3600
+        );
 
-    currentAudio.oncanplaythrough = resolve;
-    currentAudio.onerror = reject;
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
-});
+    currentAudio = new Audio(data.signedUrl);
 
-try {
+    try {
 
-    await currentAudio.play();
+        await currentAudio.play();
+
+    }
+    catch (e) {
+
+        alert(e.message);
+
+    }
 
 }
 
