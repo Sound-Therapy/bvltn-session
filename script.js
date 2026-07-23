@@ -726,10 +726,35 @@ async function recordWithoutGuide() {
 
             alert("Recording finished.");
 
-            document
-                .getElementById("recordNoGuideBtn")
-                .classList
-                .remove("hidden");
+            mediaRecorder.onstop = function () {
+
+    recordedBlob = new Blob(recordedChunks, {
+        type: mediaRecorder.mimeType
+    });
+
+    document
+        .getElementById("recordingStatus")
+        .classList
+        .add("hidden");
+
+    alert("Recording finished.");
+
+    document
+        .getElementById("recordGuideBtn")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("recordNoGuideBtn")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("recordingModal")
+        .classList
+        .remove("hidden");
+
+};
 
             document
                 .getElementById("recordingModal")
