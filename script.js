@@ -214,55 +214,66 @@ async function submitRecording() {
     const fileName = `take${currentTake}.wav`;
     console.log(fileName);
 
-const path =
-    `${window.currentSession.session_token}/${fileName}`;
+    const path =
+        `${window.currentSession.session_token}/${fileName}`;
 
-const wavBlob = await blobToWav(recordedBlob);
-submitBtn.innerText = "⬆ Uploading...";
-const { data, error } =
-    await db.storage
-        .from("recordings")
-        .upload(
-            path,
-            wavBlob,
-            {
-                upsert: true,
-                contentType: "audio/wav"
-            }
-        );
+    const wavBlob = await blobToWav(recordedBlob);
+
+    submitBtn.innerText = "⬆ Uploading...";
+
+    const { data, error } =
+        await db.storage
+            .from("recordings")
+            .upload(
+                path,
+                wavBlob,
+                {
+                    upsert: true,
+                    contentType: "audio/wav"
+                }
+            );
 
     console.log("Upload data:", data);
     console.log("Upload error:", error);
 
     if (error) {
 
-    submitBtn.disabled = false;
-    submitBtn.innerText = "Submit";
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
 
-    alert(error.message);
-    return;
+        alert(error.message);
+        return;
 
-}
+    }
+
     submitBtn.innerText = "✅ Uploaded!";
+
     closeRecordingModal();
 
     if (currentTake < 5) {
 
         alert(`Take ${currentTake} uploaded!`);
-        console.log("CURRENT TAKE =", currentTake);
+
         currentTake++;
 
         document.getElementById("recordGuideBtn").innerText =
-            `Record Take ${currentTake}`;
+            `🎤 Record Take ${currentTake} with Guide`;
+
+        document.getElementById("recordNoGuideBtn").innerText =
+            `🎵 Record Take ${currentTake} without Guide`;
 
         recordedBlob = null;
-submitBtn.disabled = false;
-submitBtn.innerText = "Submit";
-    } else {
+
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
+
+    }
+    else {
 
         alert("Take 5 uploaded!\n\nAll 5 takes have been submitted.\nThank you!");
 
         document.getElementById("recordGuideBtn").disabled = true;
+        document.getElementById("recordNoGuideBtn").disabled = true;
 
     }
 
