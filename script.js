@@ -625,7 +625,12 @@ mediaRecorder = new MediaRecorder(stream);
 document
     .getElementById("recordGuideBtn")
     .classList
-    .remove("hidden");
+    .add("hidden");
+
+document
+    .getElementById("recordNoGuideBtn")
+    .classList
+    .add("hidden");
 document
     .getElementById("recordingModal")
     .classList
@@ -710,9 +715,14 @@ async function recordWithoutGuide() {
         mediaRecorder.start();
 
         document
-            .getElementById("recordNoGuideBtn")
-            .classList
-            .add("hidden");
+    .getElementById("recordGuideBtn")
+    .classList
+    .add("hidden");
+
+document
+    .getElementById("recordNoGuideBtn")
+    .classList
+    .add("hidden");
 
         document
             .getElementById("recordingStatus")
