@@ -212,13 +212,13 @@ async function submitRecording() {
     }
 
     const fileName = `take${currentTake}.wav`;
-    console.log(fileName);
 
     const path =
         `${window.currentSession.session_token}/${fileName}`;
 
     const wavBlob = await blobToWav(recordedBlob);
 
+    submitBtn.disabled = true;
     submitBtn.innerText = "⬆ Uploading...";
 
     const { data, error } =
@@ -232,9 +232,6 @@ async function submitRecording() {
                     contentType: "audio/wav"
                 }
             );
-
-    console.log("Upload data:", data);
-    console.log("Upload error:", error);
 
     if (error) {
 
@@ -256,24 +253,49 @@ async function submitRecording() {
 
         currentTake++;
 
+        recordedBlob = null;
+
+        document
+            .getElementById("recordGuideBtn")
+            .disabled = false;
+
+        document
+            .getElementById("recordNoGuideBtn")
+            .disabled = false;
+
+        document
+            .getElementById("recordGuideBtn")
+            .classList
+            .remove("hidden");
+
+        document
+            .getElementById("recordNoGuideBtn")
+            .classList
+            .remove("hidden");
+
         document.getElementById("recordGuideBtn").innerText =
             `🎤 Record Take ${currentTake} with Guide`;
 
         document.getElementById("recordNoGuideBtn").innerText =
             `🎵 Record Take ${currentTake} without Guide`;
 
-        recordedBlob = null;
-
         submitBtn.disabled = false;
         submitBtn.innerText = "Submit";
 
     }
+
     else {
 
         alert("Take 5 uploaded!\n\nAll 5 takes have been submitted.\nThank you!");
 
         document.getElementById("recordGuideBtn").disabled = true;
         document.getElementById("recordNoGuideBtn").disabled = true;
+
+        document.getElementById("recordGuideBtn").innerText =
+            "All Takes Submitted";
+
+        document.getElementById("recordNoGuideBtn").innerText =
+            "All Takes Submitted";
 
     }
 
@@ -703,7 +725,7 @@ async function recordWithoutGuide() {
 
         mediaRecorder = new MediaRecorder(stream);
 
-        mediaRecorder.ondataavailable = function(event) {
+        mediaRecorder.ondataavailable = function (event) {
 
             if (event.data.size > 0) {
 
@@ -724,56 +746,36 @@ async function recordWithoutGuide() {
                 .classList
                 .add("hidden");
 
-            alert("Recording finished.");
+            document
+                .getElementById("recordGuideBtn")
+                .classList
+                .remove("hidden");
 
-            mediaRecorder.onstop = function () {
-
-    recordedBlob = new Blob(recordedChunks, {
-        type: mediaRecorder.mimeType
-    });
-
-    document
-        .getElementById("recordingStatus")
-        .classList
-        .add("hidden");
-
-    alert("Recording finished.");
-
-    document
-        .getElementById("recordGuideBtn")
-        .classList
-        .remove("hidden");
-
-    document
-        .getElementById("recordNoGuideBtn")
-        .classList
-        .remove("hidden");
-
-    document
-        .getElementById("recordingModal")
-        .classList
-        .remove("hidden");
-
-};
+            document
+                .getElementById("recordNoGuideBtn")
+                .classList
+                .remove("hidden");
 
             document
                 .getElementById("recordingModal")
                 .classList
                 .remove("hidden");
 
+            alert("Recording finished.");
+
         };
 
         mediaRecorder.start();
 
         document
-    .getElementById("recordGuideBtn")
-    .classList
-    .add("hidden");
+            .getElementById("recordGuideBtn")
+            .classList
+            .add("hidden");
 
-document
-    .getElementById("recordNoGuideBtn")
-    .classList
-    .add("hidden");
+        document
+            .getElementById("recordNoGuideBtn")
+            .classList
+            .add("hidden");
 
         document
             .getElementById("recordingStatus")
@@ -804,109 +806,123 @@ async function joinSession() {
     if (!token) {
 
         alert("Please enter Session Code.");
-
         return;
 
     }
 
-   const { data, error } = await db
-    .from("sessions")
-    .select("*")
-    .ilike("session_token", token);
+    const { data, error } = await db
+        .from("sessions")
+        .select("*")
+        .ilike("session_token", token);
 
-console.log(data);
-console.log(error);
-
-if (error) {
-    alert(error.message);
-    return;
-}
-
-if (!data || data.length === 0) {
-    alert("Session not found.");
-    return;
-}
-
-const session = data[0];
-    console.log("TOKEN =", token);
-    console.log("DATA =", data, "ERROR =", error);
+    console.log(data);
+    console.log(error);
 
     if (error) {
 
-        alert("Session not found.");
-
+        alert(error.message);
         return;
 
     }
 
-  hideAll();
+    if (!data || data.length === 0) {
 
-document
-    .getElementById("homePage")
-    .classList
-    .remove("hidden");
+        alert("Session not found.");
+        return;
 
-document
-    .getElementById("producerLink")
-    .style
-    .display = "none";
+    }
 
-document
-    .getElementById("instructionPanel")
-    .classList
-    .remove("hidden");
-document
-    .getElementById("joinPanel")
-    .style
-    .display = "none";
+    const session = data[0];
 
+    hideAll();
+
+    document
+        .getElementById("homePage")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("producerLink")
+        .style
+        .display = "none";
+
+    document
+        .getElementById("instructionPanel")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("joinPanel")
+        .style
+        .display = "none";
 
     document
         .getElementById("currentSessionName")
         .innerText =
-       session.session_name;
+        session.session_name;
 
     document
         .getElementById("currentLyrics")
         .innerText =
         session.lyrics;
+
     window.currentSession = session;
+
     const { data: existingFiles } = await db.storage
-    .from("recordings")
-    .list(session.session_token);
+        .from("recordings")
+        .list(session.session_token);
 
-if (existingFiles) {
+    if (existingFiles) {
 
-    const takes = existingFiles
-        .filter(f => f.name.endsWith(".wav"))
-        .map(f => {
-            const m = f.name.match(/take(\d+)\.wav/i);
-            return m ? Number(m[1]) : 0;
-        });
+        const takes = existingFiles
+            .filter(f => f.name.endsWith(".wav"))
+            .map(f => {
 
-   currentTake = takes.length
-    ? Math.max(...takes) + 1
-    : 1;
+                const m = f.name.match(/take(\d+)\.wav/i);
+                return m ? Number(m[1]) : 0;
 
-if (currentTake > 5) {
+            });
 
-    currentTake = 5;
+        currentTake = takes.length
+            ? Math.max(...takes) + 1
+            : 1;
 
-    document.getElementById("recordGuideBtn").disabled = true;
-    document.getElementById("recordGuideBtn").innerText =
-        "All Takes Submitted";
+    }
 
-}
-else {
+    if (currentTake > 5) {
 
-    document.getElementById("recordGuideBtn").disabled = false;
-    document.getElementById("recordGuideBtn").innerText =
-        `Record Take ${currentTake}`;
+        currentTake = 5;
 
-}
+        document.getElementById("recordGuideBtn").disabled = true;
+        document.getElementById("recordNoGuideBtn").disabled = true;
+
+        document.getElementById("recordGuideBtn").innerText =
+            "All Takes Submitted";
+
+        document.getElementById("recordNoGuideBtn").innerText =
+            "All Takes Submitted";
+
+    }
+
+    else {
+
+        document.getElementById("recordGuideBtn").disabled = false;
+        document.getElementById("recordNoGuideBtn").disabled = false;
+
+        document.getElementById("recordGuideBtn").innerText =
+            `🎤 Record Take ${currentTake} with Guide`;
+
+        document.getElementById("recordNoGuideBtn").innerText =
+            `🎵 Record Take ${currentTake} without Guide`;
+
+        document.getElementById("recordGuideBtn").classList.remove("hidden");
+        document.getElementById("recordNoGuideBtn").classList.remove("hidden");
+
+    }
+
     localStorage.setItem("artistMode", "true");
     localStorage.setItem("artistSession", JSON.stringify(session));
-}
+
 }
 // ---------- Save Session ----------
 async function saveSession() {
