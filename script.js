@@ -648,7 +648,53 @@ document
 }
 async function recordWithoutGuide() {
 
-    alert("Record without Guide");
+    if (!window.currentSession) {
+        alert("No current session");
+        return;
+    }
+
+    audioChunks = [];
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true
+    });
+
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = function (event) {
+
+        audioChunks.push(event.data);
+
+    };
+
+    mediaRecorder.onstop = async function () {
+
+        const blob = new Blob(audioChunks, {
+            type: "audio/webm"
+        });
+
+        await uploadTake(blob);
+
+        stream.getTracks().forEach(track => track.stop());
+
+    };
+
+    mediaRecorder.start();
+
+    document
+        .getElementById("recordGuideBtn")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("recordNoGuideBtn")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("recordingStatus")
+        .classList
+        .remove("hidden");
 
 }
 
